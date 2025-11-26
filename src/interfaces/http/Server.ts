@@ -1,13 +1,13 @@
 import express from 'express'
 import { createJwtService } from '@/infrastructure/auth/JwtService'
-import { createPrismaUserRepo } from '@/infrastructure/db/DAO/User'
+import { initEnv, env } from '@/configs/env'
+import { seedDatabase } from '@/db/sqliteInit'
 
-import { createAuthMiddleware } from '@/interfaces/middlewares/Auth'
+import { createPrismaUserRepo } from '@/repositories/UserRepository'
+import { createPrismaCategoryRepo } from '@/repositories/CategoryRepository'
+
 import { createAuthController } from '@/controllers/Auth'
-
-import { seedDatabase } from '@/infrastructure/db/sqliteInit'
-
-import { initEnv, env } from '@/infrastructure/configs/env'
+import { createCategoryController } from '../controllers/Category'
 
 initEnv()
 
@@ -18,21 +18,19 @@ app.use(express.json())
 seedDatabase()
 
 // Dependencies
-const userRepo = createPrismaUserRepo()
 const jwtService = createJwtService()
-const deps = { userRepo, jwtService }
+const userRepo = createPrismaUserRepo()
+const categoryRepo = createPrismaCategoryRepo()
 
+const deps = { jwtService, userRepo, categoryRepo }
+
+// Controllers
 const authController = createAuthController(deps)
-const authMiddleware = createAuthMiddleware(jwtService)
+const categoryController = createCategoryController(deps)
 
 // Routes
 app.post('/auth/login', authController.login)
 
-app.get('/profile', authMiddleware, (req, res) => {
-  res.json({
-    message: 'Protected route accessed',
-    user: (req as any).user,
-  })
-})
+app.all('/category{/:id}', categoryController.switcher)
 
 app.listen(env.PORT, () => console.info('Server running on port 3000'))
