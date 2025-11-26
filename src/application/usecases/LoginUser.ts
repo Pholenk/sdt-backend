@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import { IUserRepository } from '@/domain/repositories/UserRepository'
+import { IUserRepository } from '@/repositories/UserRepository'
 import { JwtService } from '@/infrastructure/auth/JwtService'
 
 export const loginUser = async (
