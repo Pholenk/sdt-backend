@@ -16,7 +16,7 @@ export const createAuthController = (deps: {
     } catch (err: unknown) {
       let message = 'Something Went Wrong'
 
-      if (err?.message) {
+      if (err instanceof Error) {
         message = err?.message
       }
 
