@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    /* Path Alias */
+    "baseUrl": "./src",
+    "paths": {
+      // "@/*": ["*"],
+      "@/application/*": ["application/*"],
+      "@/usecases/*": ["application/usecases/*"],
+      "@/domain/*": ["domain/*"],
+      "@/entities/*": ["domain/entities/*"],
+      "@/repositories/*": ["domain/repositories/*"],
+      "@/infrastructure/*": ["infrastructure/*"],
+      "@/configs/*": ["infrastructure/configs/*"],
+      "@/db/*": ["infrastructure/db/*"],
+      "@/interfaces/*": ["interfaces/*"],
+      "@/controllers/*": ["interfaces/controllers/*"],
+      "@/middlewares/*": ["interfaces/middlewares/*"],
+      "@/http/*": ["interfaces/http/*"]
+    }
+  }
+}
