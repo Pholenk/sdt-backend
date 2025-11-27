@@ -18,3 +18,11 @@ model Category {
   id           String @id @default(cuid())
   name         String @unique
 }
+
+model Master {
+  id           String @id @default(cuid())
+  firstName    String
+  lastName     String
+  description  String
+  favorites    Boolean
+}
