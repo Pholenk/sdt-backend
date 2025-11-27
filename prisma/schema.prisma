@@ -8,21 +8,33 @@ generator client {
 }
 
 model User {
-  id           String @id @default(cuid())
-  username     String @unique
+  id           String   @id @default(cuid())
+  username     String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
 }
 
 model Category {
-  id           String @id @default(cuid())
-  name         String @unique
+  id   String @id @default(cuid())
+  name String @unique
+  pets Pet[]
 }
 
 model Master {
-  id           String @id @default(cuid())
-  firstName    String
-  lastName     String
-  description  String
-  favorites    Boolean
+  id          String  @id @default(cuid())
+  firstName   String
+  lastName    String
+  description String
+  favorites   Boolean
+  pets        Pet[]
+}
+
+model Pet {
+  id         String   @id @default(cuid())
+  masterId   String
+  master     Master   @relation(fields: [masterId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  name       String
+  dob        String
 }
