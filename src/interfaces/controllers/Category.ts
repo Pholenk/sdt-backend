@@ -24,6 +24,10 @@ const categoryController: Record<string, Function> = {
   },
   read: async (res: Response, dep: { categoryRepo: ICategoryRepository }, categoryId: string) => {
     try {
+      if (categoryId === '') {
+        return res.status(400).json({ error: 'id is required.' })
+      }
+
       const result = await ReadCategory(dep, categoryId)
       return res.json(result)
     } catch (err: unknown) {
@@ -43,6 +47,10 @@ const categoryController: Record<string, Function> = {
     newCategory: Category
   ) => {
     try {
+      if (categoryId === '') {
+        return res.status(400).json({ error: 'id is required.' })
+      }
+
       const result = await EditCategory(dep, categoryId, newCategory)
       return res.json(result)
     } catch (err: unknown) {
@@ -80,6 +88,10 @@ const categoryController: Record<string, Function> = {
     categoryId: string
   ) => {
     try {
+      if (categoryId === '') {
+        return res.status(400).json({ error: 'id is required.' })
+      }
+
       await DeleteCategory(dep, categoryId)
       return res.status(204).json({})
     } catch (err: unknown) {
